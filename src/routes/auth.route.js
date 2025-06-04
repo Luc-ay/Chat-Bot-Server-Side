@@ -3,8 +3,8 @@ import { loginUser, logoutUser, registerUser } from '../controllers/auth.control
 
 const route = express.Router();
 
-route.get('/register', registerUser)
-route.get('/login', loginUser)
-route.get('/logout', logoutUser)
+route.post('/register', registerUser)
+route.post('/login', loginUser)
+route.post('/logout', logoutUser)
 
 export default route;

@@ -6,7 +6,7 @@ import morgan from 'morgan';
 const app = express();
 
 dotenv.config();
-app.use(json())
+app.use(express.json())
 app.use(morgan("dev"));
 
 app.use('/auth', authRoute)
