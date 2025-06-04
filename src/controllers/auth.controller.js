@@ -1,5 +1,6 @@
 import User from './../models/User.js';
 import bcrypt from 'bcryptjs';
+import { generateToken } from './../lib/utils.js';
 
 export const registerUser = async (req,res) => {
     const {fullName, email, password, username} = req.body
@@ -31,10 +32,25 @@ export const registerUser = async (req,res) => {
         // Token for authurization
 
         if(newUser){
-            
-        }
+            generateToken(newUser._id, res)
+            await newUser.save()
+
+            res.status(201).json({
+                _id: newUser._id,
+                fullName: newUser.fullName,
+                email: newUser.email,
+                profilePic: newUser.profilePic
+            })
+        }else(
+            res.status(400).json({
+                Message: "Invalid user data"
+            })
+        )
     } catch (error) {
-        
+        res.status(500).json({
+            Message: "Internal Server Error",
+            error: error.message
+        })
     }
 }
 export const loginUser = async (req,res) => {
