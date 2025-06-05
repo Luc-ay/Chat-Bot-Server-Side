@@ -1,5 +1,7 @@
 import express, { json } from 'express';
-import authRoute from './routes/auth.route.js'
+import authRoutes from './routes/auth.route.js'
+import userRoutes from './routes/user.route.js'
+import messageRoutes from './routes/message.route.js'
 import dotenv from 'dotenv'
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -11,7 +13,9 @@ app.use(express.json())
 app.use(morgan("dev"));
 app.use(cookieParser())
 
-app.use('/auth', authRoute)
+app.use('/auth', authRoutes)
+app.use('/user', userRoutes)
+app.use('/user', messageRoutes)
 
 const PORT = process.env.PORT || 5050
 
