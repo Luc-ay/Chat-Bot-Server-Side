@@ -89,18 +89,3 @@ export const loginUser = async (req,res) => {
             })
     }
 }
-export const logoutUser = async (req,res) => {
-    try {
-        res.cookie("jwt", "", {maxAge:0})
-        res.status(200).json({
-                Message: "Logout Successfully",
-                Success: true,
-            })
-    } catch (error) {
-        console.log("Error in Logout API", error.message)
-        res.status(500).json({
-                Message: "Error in logout API",
-                Success: false,
-            })
-    }
-}
