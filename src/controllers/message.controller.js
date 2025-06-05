@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import User from "../models/User.js";
 import Message from './../models/message.model.js';
 
@@ -27,6 +28,30 @@ export const getMessages = async (req, res) => {
         });
 
         res.status(200).json(messages)
+    } catch (error) {
+        console.log("Error in get Users messages", error.message);
+        res.status(500).json({Message: 'Error in get Users messages', error: error.message })
+    }
+}
+
+export const sendMessage = async (req,res) =>{
+    try {
+        const {text, image} = req.body;
+        const {id:receiverId} = req.params;
+        const senderId = req.user._id;
+
+        let imageUrl;
+        if(image){
+            const uploadResponse = await cloudinary.uploader.upload(image);
+            imageUrl = uploadResponse.secure_url;
+        }
+
+        const newMessage = new Message({
+            senderId,
+            receiverId,
+            text,
+            image:imageUrl,
+        })
     } catch (error) {
         console.log("Error in get Users messages", error.message);
         res.status(500).json({Message: 'Error in get Users messages', error: error.message })
