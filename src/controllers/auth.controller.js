@@ -54,8 +54,53 @@ export const registerUser = async (req,res) => {
     }
 }
 export const loginUser = async (req,res) => {
-    res.json('Welcome to Development login User')
+    const {email, password} = req.body;
+    try {
+        const user = await User.findOne({email})
+
+        if(!user){
+            return res.status(404).json({
+                Message: "invalid credentials",
+                Success: false,
+            })
+        };
+
+        const passwordMatch = await bcryt.compare(password, user.password)
+        if(!passwordMatch){
+            return res.status(404).json({
+                Message: "invalid credentials",
+                Success: false,
+            })
+        }
+
+        generateToken(user._id, res)
+
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profilePic: user.profilePic,
+        })
+    } catch (error) {
+        console.log("Error in Login API", error.message)
+        res.status(500).json({
+                Message: "Error in login API",
+                Success: false,
+            })
+    }
 }
 export const logoutUser = async (req,res) => {
-    res.json('Welcome to Development Logout User')
+    try {
+        res.cookie("jwt", "", {maxAge:0})
+        res.status(200).json({
+                Message: "Logout Successfully",
+                Success: true,
+            })
+    } catch (error) {
+        console.log("Error in Logout API", error.message)
+        res.status(500).json({
+                Message: "Error in logout API",
+                Success: false,
+            })
+    }
 }
