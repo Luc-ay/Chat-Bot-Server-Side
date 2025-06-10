@@ -52,6 +52,12 @@ export const sendMessage = async (req,res) =>{
             text,
             image:imageUrl,
         })
+
+        await newMessage.save();
+
+        // todo: realtime functionality goes here => socket.io
+
+        res.status(201).json(newMessage)
     } catch (error) {
         console.log("Error in get Users messages", error.message);
         res.status(500).json({Message: 'Error in get Users messages', error: error.message })
