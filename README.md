@@ -1,7 +1,3 @@
-Thanks! Based on the provided dependencies, here’s an updated and more accurate version of your `README.md` file, reflecting tools like **Cloudinary**, **bcryptjs**, **cookie-parser**, and **morgan**. Let me know if you’re using anything else (like file uploads, roles, etc.).
-
----
-
 ````markdown
 # ⚡ Realtime Chat App – Node.js Backend
 
